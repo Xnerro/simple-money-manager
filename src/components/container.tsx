@@ -15,76 +15,113 @@ import {
 } from '@chakra-ui/react';
 import { SideBar } from './sidebar';
 import { Card } from './card';
+import axios from 'axios';
 
 interface Props {
-  menu?: string[];
+  menu?: MenuItem[];
+  getNewId: getNewIdHand;
 }
 
-export const ContainerBox: React.FC<Props> = ({ menu }) => {
+export const ContainerBox: React.FC<Props> = ({ menu, getNewId }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [data, setData] = React.useState<CardData[]>([
-    {
-      desc: 'Jajan',
-      type: 'Pengeluaran',
-      amount: 100.0,
-      date: '2020-01-01',
-    },
-  ]);
+  const [data, setData] = React.useState<CardData[]>([]);
+  const [active, setActive] = React.useState<string>('Pribadi');
+  const [prevId, setPrevId] = React.useState<number>(0);
+
+  const getData = async () => {
+    await axios.get(process.env.REACT_APP_API_URL + 'keuangan').then(res => {
+      setData(res.data.data);
+    });
+  };
+
+  const addData = async (data: CardData) => {
+    await axios
+      .post(process.env.REACT_APP_API_URL + 'keuangan/info_keuangan', data)
+      .then(res => {})
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(e.target?.elements);
     let value = e.target?.elements;
-    setData([
-      ...data,
-      {
-        desc: value.desc.value,
-        type: value.type.value,
-        amount: value.amount.value,
-        date: new Date().toLocaleDateString(),
-      },
-    ]);
+    addData({
+      id_menu: menu?.filter(item => item.name === active)[0].id,
+      description: value.desc.value,
+      is_income: value.type.value === 'Pemasukan' ? true : false,
+      nominal: value.amount.value,
+      is_active: true,
+      created_at: new Date().toLocaleDateString(),
+    });
     onClose();
   };
+
+  const setActiveHand = (name: string) => {
+    setActive(name);
+  };
+
+  const removeHand = (id: number) => {
+    setPrevId(id);
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, [isOpen, prevId]);
   return (
     <>
-      <Box display='flex' flexDir='row' w='100%' maxW='100vw'>
-        <SideBar menu={menu} />
-        <Box
-          w='100'
-          position='relative'
-          display='fl ex'
-          justifyContent='center'>
+      <Box
+        display='flex'
+        flexDir={{ lg: 'row', sm: 'row', base: 'column' }}
+        minW={{ lg: '100%', sm: '100%', base: '100vw' }}
+        maxW={{ lg: '100%', sm: '100%', base: '10000vw' }}
+        overflowX='hidden'>
+        <SideBar
+          menu={menu}
+          setActive={setActiveHand}
+          active={active}
+          prevId={prevId}
+          getNewId={getNewId}
+        />
+        <Box w='100' position='relative' display='flex' justifyContent='center'>
           <Box
-            h='80vh'
-            w='78vw'
-            p='6'
+            h={{ lg: '85vh', sm: '85vh', base: '85vh' }}
+            w={{ lg: '78vw', sm: '78vw', base: '100vw' }}
+            p={{ lg: '6', sm: '6', base: '4' }}
             display='flex'
             flexWrap='wrap'
-            columnGap='10'
-            rowGap='7'
+            columnGap={{ lg: '10', sm: '10', base: '4' }}
+            rowGap={{ lg: '7', sm: '5', base: '4' }}
             alignContent='start'
             alignItems='start'
             justifyContent='center'>
-            {data?.map((item: any, index: number) => (
-              <Card key={index} data={item} />
-            ))}
+            {data.map(
+              (item, index) =>
+                item.id_menu ===
+                  menu?.filter(item => item.name === active)[0].id && (
+                  <Card key={index} data={item} removeData={removeHand} />
+                )
+            )}
           </Box>
           <Button
             position='absolute'
             left='50%'
             transform='translate(-50%, 0%)'
-            bottom='-5%'
+            bottom={{ lg: '0%', sm: '0%', base: '0%' }}
             onClick={onOpen}>
             Tambah Transaksi
           </Button>
         </Box>
       </Box>
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        size={{ lg: 'lg', base: 'sm' }}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Tambah Transaksi</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box
