@@ -73,9 +73,9 @@ export const ContainerBox: React.FC<Props> = ({ menu, getNewId }) => {
       <Box
         display='flex'
         flexDir={{ lg: 'row', sm: 'row', base: 'column' }}
-        minW={{ lg: '100%', sm: '100%', base: '100vw' }}
-        maxW={{ lg: '100%', sm: '100%', base: '10000vw' }}
-        overflowX='hidden'>
+        minW={{ lg: '100%', sm: '100%', base: '100%' }}
+        maxW={{ lg: '100%', sm: '100%', base: '100%' }}
+        overflow='hidden'>
         <SideBar
           menu={menu}
           setActive={setActiveHand}
@@ -83,31 +83,32 @@ export const ContainerBox: React.FC<Props> = ({ menu, getNewId }) => {
           prevId={prevId}
           getNewId={getNewId}
         />
-        <Box w='100' position='relative' display='flex' justifyContent='center'>
-          <Box
-            h={{ lg: '85vh', sm: '85vh', base: '85vh' }}
-            w={{ lg: '78vw', sm: '78vw', base: '100vw' }}
-            p={{ lg: '6', sm: '6', base: '4' }}
-            display='flex'
-            flexWrap='wrap'
-            columnGap={{ lg: '10', sm: '10', base: '4' }}
-            rowGap={{ lg: '7', sm: '5', base: '4' }}
-            alignContent='start'
-            alignItems='start'
-            justifyContent='center'>
-            {data.map(
-              (item, index) =>
-                item.id_menu ===
-                  menu?.filter(item => item.name === active)[0].id && (
-                  <Card key={index} data={item} removeData={removeHand} />
-                )
-            )}
-          </Box>
+        <Box
+          position='relative'
+          w={{ lg: '78vw', sm: '100vw', base: '100vw' }}
+          minH={{ lg: '80vh', sm: '80vh', base: '80vh' }}
+          p={{ lg: '10', sm: '6', base: '4' }}
+          pb={{ lg: '10', sm: '6', base: '4' }}
+          display='flex'
+          flexWrap='wrap'
+          overflowY='auto'
+          columnGap={{ lg: '10', sm: '10', base: '4' }}
+          rowGap={{ lg: '7', sm: '5', base: '4' }}
+          alignContent='start'
+          alignItems='start'
+          justifyContent='center'>
+          {data.map(
+            (item, index) =>
+              item.id_menu ===
+                menu?.filter(item => item.name === active)[0].id && (
+                <Card key={index} data={item} removeData={removeHand} />
+              )
+          )}
           <Button
             position='absolute'
             left='50%'
             transform='translate(-50%, 0%)'
-            bottom={{ lg: '0%', sm: '0%', base: '0%' }}
+            bottom='1%'
             onClick={onOpen}>
             Tambah Transaksi
           </Button>

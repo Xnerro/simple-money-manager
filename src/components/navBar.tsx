@@ -71,7 +71,10 @@ export const NavBar: React.FC<Props> = ({ getNewId }) => {
         alignItems='center'
         justifyContent='space-between'
         borderBottomWidth='3px'
-        borderBottomColor='gray.200'>
+        borderBottomColor='gray.200'
+        _dark={{
+          borderBottomColor: 'gray.700',
+        }}>
         <Box display='flex' alignItems='center'>
           <ColorModeSwitcher />
           <IconButton

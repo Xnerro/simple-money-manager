@@ -41,8 +41,9 @@ export const SideBar: React.FC<Props> = ({
       <Box
         display='flex'
         flexDir={{ lg: 'column', sm: 'column', base: 'row' }}
-        overflowX={{ base: 'scroll', lg: 'hidden', sm: 'hidden' }}
-        width={{ base: '100%', lg: '100%', sm: '100vw' }}
+        overflowX={{ base: 'auto', lg: 'hidden', sm: 'hidden' }}
+        width={{ base: '100%', lg: '300px', sm: '200px' }}
+        maxW={{ base: '100%', lg: '100%', sm: '100%' }}
         alignItems='center'
         rowGap='5'
         columnGap='2'>
@@ -52,7 +53,7 @@ export const SideBar: React.FC<Props> = ({
               <Box
                 role='group'
                 position='relative'
-                w={{ lg: '100%', sm: '100%', base: '300px' }}
+                w={{ lg: '100%', sm: '100%', base: '400px' }}
                 key={index}
                 bg={active === item.name ? 'white' : 'gray.200'}
                 _dark={{
@@ -74,7 +75,9 @@ export const SideBar: React.FC<Props> = ({
                   },
                 }}
                 cursor='pointer'>
-                <Text fontSize={{ lg: 'xl', md: 'lg', base: 'sm' }}>
+                <Text
+                  fontSize={{ lg: 'xl', md: 'lg', base: 'sm' }}
+                  w={{ lg: '100%', sm: '100%', base: '100px' }}>
                   {item.name}
                 </Text>
                 <Icon
