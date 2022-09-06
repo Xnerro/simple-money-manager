@@ -31,7 +31,7 @@ export const App = () => {
   }, [prevId]);
   return (
     <ChakraProvider theme={theme}>
-      <Box minH='100vh' maxW='100%'>
+      <Box height='100vh' maxW='100%'>
         <NavBar getNewId={getNewIdHand} />
         {menu?.length === 0 ? (
           <AddMenu />

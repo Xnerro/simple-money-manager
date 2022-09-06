@@ -24,6 +24,33 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <style>
+      *::-webkit-scrollbar {
+        width: 0.5em;
+        background-color: transparent;
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background-color: #000000;
+        border-radius: 5px;
+      }
+
+      *::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+      *::-webkit-scrollbar-button {
+        display: none;
+      }
+
+      @media screen and (max-width: 768px) {
+        *::-webkit-scrollbar {
+          width: 0.3em;
+          height: 0.1rem;
+          background-color: transparent;
+        }
+      }
+    </style>
     <title>Money Manager</title>
   </head>
   <body>

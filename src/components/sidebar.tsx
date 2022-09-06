@@ -41,11 +41,13 @@ export const SideBar: React.FC<Props> = ({
       <Box
         display='flex'
         flexDir={{ lg: 'column', sm: 'column', base: 'row' }}
-        overflowX={{ base: 'auto', lg: 'hidden', sm: 'hidden' }}
+        overflowX={{ base: 'scroll', lg: 'hidden', sm: 'hidden' }}
+        overflowY={{ base: 'hidden', lg: 'auto', sm: 'auto' }}
         width={{ base: '100%', lg: '300px', sm: '200px' }}
         maxW={{ base: '100%', lg: '100%', sm: '100%' }}
         alignItems='center'
         rowGap='5'
+        height={{ lg: '60vh', sm: '60vh', base: '100%' }}
         columnGap='2'>
         {menu?.map(
           (item: any, index: number) =>
@@ -113,7 +115,7 @@ export const SideBar: React.FC<Props> = ({
           <Text fontSize={{ lg: 'xl', base: 'sm' }}>Rp. {data?.total}</Text>
           <Text fontSize={{ lg: 'xl', base: 'sm' }}>Max Pengeluaran :</Text>
           <Text fontSize={{ lg: 'xl', base: 'sm' }}>Rp. {data?.max}</Text>
-          <Text fontSize={{ lg: 'xl', base: 'sm' }}>Max Pemasukan :</Text>
+          <Text fontSize={{ lg: 'xl', base: 'sm' }}>Min Pemasukan :</Text>
           <Text fontSize={{ lg: 'xl', base: 'sm' }}>Rp. {data?.min}</Text>
         </Box>
       </Box>

@@ -12,10 +12,12 @@ import {
   FormLabel,
   Input,
   Select,
+  Icon,
 } from '@chakra-ui/react';
 import { SideBar } from './sidebar';
 import { Card } from './card';
 import axios from 'axios';
+import { FaPlus } from 'react-icons/fa';
 
 interface Props {
   menu?: MenuItem[];
@@ -75,6 +77,7 @@ export const ContainerBox: React.FC<Props> = ({ menu, getNewId }) => {
         flexDir={{ lg: 'row', sm: 'row', base: 'column' }}
         minW={{ lg: '100%', sm: '100%', base: '100%' }}
         maxW={{ lg: '100%', sm: '100%', base: '100%' }}
+        h={{ lg: '85vh', sm: '85vh', base: '85vh' }}
         overflow='hidden'>
         <SideBar
           menu={menu}
@@ -105,12 +108,14 @@ export const ContainerBox: React.FC<Props> = ({ menu, getNewId }) => {
               )
           )}
           <Button
-            position='absolute'
-            left='50%'
-            transform='translate(-50%, 0%)'
-            bottom='1%'
+            position='fixed'
+            bottom='5%'
+            right='5%'
+            w={{ lg: '12', sm: '10', base: '10' }}
+            h={{ lg: '12', sm: '10', base: '10' }}
+            borderRadius='50%'
             onClick={onOpen}>
-            Tambah Transaksi
+            <Icon as={FaPlus} />
           </Button>
         </Box>
       </Box>
